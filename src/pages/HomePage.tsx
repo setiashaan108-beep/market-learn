@@ -1,5 +1,4 @@
 function HomePage() {
-
   return <h1>MarketLearn</h1>;
 }
 
