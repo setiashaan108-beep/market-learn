@@ -1,8 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 function InstructorLayout() {
-  return 
-  (
+  return (
     <>
       <header className="instructor-layout-header">
         <h1>Instructor</h1>
