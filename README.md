@@ -23,4 +23,11 @@ npm run dev
 npm run test
 
 ## How to build
-How to build
+npm run build
+
+## Quality checks
+
+npm run lint
+npm run typecheck
+npm run test:run
+npm run build

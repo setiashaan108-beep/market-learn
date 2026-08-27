@@ -23,10 +23,13 @@ Provides robust type safety, enhances long-term maintainability, offers superior
 Accepted
 
 #### Decision
-Use **Vite** as the primary frontend build tool and bundler.
+Fast local development and simple integration with the selected React/TypeScript stack.
 
-#### Reason
-Offers a blazing-fast development experience via Hot Module Replacement (HMR) and native ES modules, ensuring instant server start times compared to legacy bundlers.
+#### Alternative
+Webpack-based setup.
+
+#### Trade-off
+We accept Vite-specific tooling conventions in exchange for simpler/faster development.
 
 ---
 
