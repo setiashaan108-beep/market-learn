@@ -20,15 +20,28 @@ App
 ```text
 src/
 ├── app/
+├── assets
 ├── components/
+├── features/
+├── auth/
+    │   └── api/
+    │       └── authApi.ts
+    │
+    └── courses/
+        └── api/
+            └── coursesApi.ts
+├── hooks/
 ├── layouts/
 ├── pages/
-├── features/
 ├── services/
+│   └── apiClient.ts
 ├── store/
-├── hooks/
 ├── types/
-└── utils/
+├── utils/
+├── App.css
+├── App.tsx
+├── index.css
+├── main.tsx
 ```
 
 ---
@@ -53,7 +66,7 @@ src/
 
 ## API layer strategy
 
-API calls will be centralized in the `services/` layer.
+Shared API infrastructure such as the HTTP client belongs in services/. Domain-specific API functions are colocated with their respective features.
 
 ```text
 Page
@@ -62,7 +75,9 @@ Feature
  ↓
 API Service
  ↓
-Backend
+authApi / coursesApi
+    ↓
+domain-specific API operations
 ```
 
 Components should not make direct API calls.
