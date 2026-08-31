@@ -1,0 +1,21 @@
+
+
+.public-navbar {
+     border-bottom: 1px solid #ddd;
+}
+
+.public-navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.public-navbar a {
+    text-decoration: none;
+    color: var(--text);
+    transition: color 0.3s ease;
+}
+
+.public-navbar a:hover {
+    color: var(--text-h);
+}
