@@ -1,4 +1,5 @@
 import HomePage from '../../pages/HomePage';
+import LoginPage from '../../pages/LoginPage';
 import LearnerLayout from '../../layouts/LearnerLayout';
 import AdminLayout from '../../layouts/AdminLayout';
 import InstructorLayout from '../../layouts/InstructorLayout';
@@ -30,7 +31,7 @@ export const routes = [
       },
       {
         path: '/login',
-        element: <h1>Login Page</h1>,
+        element: <LoginPage />,
       },
       {
         path: '/register',
