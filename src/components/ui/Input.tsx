@@ -1,6 +1,6 @@
 import type { InputProps } from '../../types/input';
 
-function Input({ type, name, value, onChange, placeholder, className, label, error }: InputProps) {
+function Input({ type, name, value, onChange, placeholder, className, label, error, onBlur }: InputProps) {
     return (
         <>
         <label htmlFor={name}>{label}</label>
@@ -11,6 +11,7 @@ function Input({ type, name, value, onChange, placeholder, className, label, err
             onChange={onChange} 
             placeholder={placeholder} 
             className={className}
+            onBlur={onBlur}
         />
         {error && <span className="error">{error}</span>}
         </>

@@ -9,4 +9,5 @@ export interface InputProps {
     className?: string;
     label?: string;
     error?: string;
+    onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
 }

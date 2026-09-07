@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Input from '../../../components/ui/Input';
 import './Login.css';
+import { login } from '../api/auth.api';
 
 
 function LoginForm() {
@@ -13,32 +14,56 @@ function LoginForm() {
         email: '',
         password: ''
     });
-    
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setForm({...form, [name]: value});
+    // Function to validate form fields and return if form is valid or not
+    function validateForm(name: string) {
+        let isValid = true;
 
         if(name === 'email') {
-            if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-                setErrors({...errors, email: 'Invalid email address'});
+            console.log('Validating email:', form.email);
+            if(!form.email) {
+                setErrors(prev => ({...prev, email: 'Email is required'}));
+            } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(form.email)) {
+                setErrors(prev => ({...prev, email: 'Invalid email address'}));
             } else {
-                setErrors({...errors, email: ''});
+                setErrors(prev => ({...prev, email: ''}));
             }
         }
 
         if(name === 'password') {
-            if(value.length < 6) {
-                setErrors({...errors, password: 'Password must be at least 6 characters'});
+            console.log('errors1:', errors);
+            if(!form.password) {
+                setErrors(prev => ({...prev, password: 'Password is required'}));
+            } else if(form.password.length < 6) {
+                setErrors(prev => ({...prev, password: 'Password must be at least 6 characters'}));
             } else {
-                setErrors({...errors, password: ''});
+                setErrors(prev => ({...prev, password: ''}));
             }
         } 
     }
+    
 
-    const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setForm(prev => ({...prev, [name]: value}));
+
+        validateForm(name);
+    }
+
+    const handleSubmit = async(e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Form submitted:', form);
+        validateForm('email');
+        validateForm('password');
+
+        const isFormValid = !errors.email && !errors.password && form.email && form.password;
+        if(isFormValid) {
+            try {
+            const response = await login(form);
+            console.log('Login successful:', response);
+            } catch (error) {
+                console.error('Login failed:', error);
+            }
+        }
     }
 
     return (
@@ -50,6 +75,7 @@ function LoginForm() {
                     className='form-control' 
                     value={form.email}
                     onChange={handleChange} 
+                    onBlur={handleChange}
                     label="Email"
                     error={errors.email}
                 />
@@ -65,7 +91,9 @@ function LoginForm() {
                     error={errors.password}
                 />
             </div>
-            <button className="btn btn-primary login-submit">Submit</button>
+            <button className="btn btn-primary login-submit">
+                Submit
+            </button>
         </form>
     )
 }
