@@ -9,6 +9,9 @@ export const handlers = [
       password: string;
     };
 
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+
     if (email !== "setiashaan108@gmail.com" || password !== "setia123") {
       return HttpResponse.json(
         {

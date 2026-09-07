@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Input from '../../../components/ui/Input';
 import './Login.css';
-import { login } from '../api/auth.api';
+import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
+const rolesRedirect = {
+    'learner': '/app',
+    'admin': '/admin',
+    'instructor': '/instructor',    
+}
 
 function LoginForm() {
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         email: '',
         password: ''
@@ -15,12 +23,19 @@ function LoginForm() {
         password: ''
     });
 
+    const { loading, error, login, isAuthenticated, user } = useAuth();
+
+    useEffect(() => {
+        if (isAuthenticated && user) {
+            const redirectUrl = rolesRedirect[user.role] || '/';
+            navigate(redirectUrl);
+        }
+    }, [isAuthenticated, user]);
+
     // Function to validate form fields and return if form is valid or not
     function validateForm(name: string) {
-        let isValid = true;
 
         if(name === 'email') {
-            console.log('Validating email:', form.email);
             if(!form.email) {
                 setErrors(prev => ({...prev, email: 'Email is required'}));
             } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(form.email)) {
@@ -31,7 +46,6 @@ function LoginForm() {
         }
 
         if(name === 'password') {
-            console.log('errors1:', errors);
             if(!form.password) {
                 setErrors(prev => ({...prev, password: 'Password is required'}));
             } else if(form.password.length < 6) {
@@ -57,12 +71,7 @@ function LoginForm() {
 
         const isFormValid = !errors.email && !errors.password && form.email && form.password;
         if(isFormValid) {
-            try {
-            const response = await login(form);
-            console.log('Login successful:', response);
-            } catch (error) {
-                console.error('Login failed:', error);
-            }
+            login(form);
         }
     }
 
@@ -91,9 +100,10 @@ function LoginForm() {
                     error={errors.password}
                 />
             </div>
-            <button className="btn btn-primary login-submit">
-                Submit
+            <button className="btn btn-primary login-submit" disabled={loading}>
+                { loading ? 'Loading....' : 'Submit'}
             </button>
+            { error && <div className="error">{error}</div> }
         </form>
     )
 }
