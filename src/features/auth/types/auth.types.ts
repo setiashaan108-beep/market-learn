@@ -1,15 +1,14 @@
 export interface LoginPayload {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
-
 export interface LoginResponse {
-    token: string;
-    user: {
-        id: string;
-        email: string;
-        name: string;
-        role: "learner" | "instructor" | "admin";
-    };
+  token: string;
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    role: 'learner' | 'instructor' | 'admin';
+  };
 }

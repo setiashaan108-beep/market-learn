@@ -7,7 +7,7 @@ function PublicLayout() {
   return (
     <>
       <div className="public-layout">
-         <header>
+        <header>
           <PublicNavbar />
         </header>
 
