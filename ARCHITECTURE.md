@@ -48,9 +48,9 @@ src/
 
 ## Pages vs Features
 
-* **Pages** represent routes/screens.
-* **Features** represent business/domain functionality.
-* Pages compose features; business logic belongs inside features.
+- **Pages** represent routes/screens.
+- **Features** represent business/domain functionality.
+- Pages compose features; business logic belongs inside features.
 
 > Pages describe **where the user is**; features describe **what the user can do**.
 
@@ -58,9 +58,9 @@ src/
 
 ## State management strategy
 
-* Keep state local by default.
-* Use shared/global state only when multiple parts of the application need it.
-* Keep server/API data separate from client-side UI state.
+- Keep state local by default.
+- Use shared/global state only when multiple parts of the application need it.
+- Keep server/API data separate from client-side UI state.
 
 ---
 
