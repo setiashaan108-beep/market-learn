@@ -9,13 +9,6 @@ type AuthContextValue = {
   loading: boolean;
   error: string | null;
 };
-const AuthContext = createContext<AuthContextValue>({
-  isAuthenticated: false,
-  user: null as LoginResponse['user'] | null,
-  login: async () => {},
-  logout: () => {},
-  loading: false,
-  error: null as string | null,
-});
+const AuthContext = createContext<AuthContextValue | null>(null);
 
 export { AuthContext };

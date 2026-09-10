@@ -33,44 +33,59 @@ function LoginForm() {
   }, [isAuthenticated, user, navigate]);
 
   // Function to validate form fields and return if form is valid or not
-  function validateForm(name: string) {
+  function validateField(name: string, value: string) {
     if (name === 'email') {
-      if (!form.email) {
-        setErrors((prev) => ({ ...prev, email: 'Email is required' }));
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(form.email)) {
-        setErrors((prev) => ({ ...prev, email: 'Invalid email address' }));
-      } else {
-        setErrors((prev) => ({ ...prev, email: '' }));
+      if (!value) {
+        return 'Email is required';
+      }
+
+      if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+        return 'Invalid email address';
       }
     }
 
     if (name === 'password') {
-      if (!form.password) {
-        setErrors((prev) => ({ ...prev, password: 'Password is required' }));
-      } else if (form.password.length < 6) {
-        setErrors((prev) => ({ ...prev, password: 'Password must be at least 6 characters' }));
-      } else {
-        setErrors((prev) => ({ ...prev, password: '' }));
+      if (!value) {
+        return 'Password is required';
+      }
+
+      if (value.length < 6) {
+        return 'Password must be at least 6 characters';
       }
     }
+
+    return '';
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-
-    validateForm(name);
+    const error = validateField(name, value);
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
   };
+
+  function validateForm(form: typeof initialForm) {
+    return {
+      email: validateField('email', form.email),
+      password: validateField('password', form.password),
+    };
+  }
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validateForm('email');
-    validateForm('password');
+    const validationErrors = validateForm(form);
+    setErrors(validationErrors);
 
-    const isFormValid = !errors.email && !errors.password && form.email && form.password;
-    if (isFormValid) {
-      login(form);
+    const isValid = !validationErrors.email && !validationErrors.password;
+
+    if (!isValid) {
+      return;
     }
+
+    login(form);
   };
 
   return (

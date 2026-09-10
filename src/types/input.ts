@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react';
+import type { ChangeEvent, FocusEvent } from 'react';
 
 export interface InputProps {
   type: string;
@@ -9,5 +9,5 @@ export interface InputProps {
   className?: string;
   label?: string;
   error?: string;
-  onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
 }

@@ -9,11 +9,11 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const login = async (user: LoginPayload) => {
+  const login = async (credentials: LoginPayload) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await loginApi(user);
+      const response = await loginApi(credentials);
       setIsAuthenticated(true);
       setUser(response.user);
       setLoading(false);
