@@ -67,6 +67,17 @@ function LoginForm() {
     }));
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    const error = validateField(name, value);
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
+  };
+
   function validateForm(form: { email: string; password: string }) {
     return {
       email: validateField('email', form.email),
@@ -97,7 +108,7 @@ function LoginForm() {
           className="form-control"
           value={form.email}
           onChange={handleChange}
-          onBlur={handleChange}
+          onBlur={handleBlur}
           label="Email"
           error={errors.email}
         />
