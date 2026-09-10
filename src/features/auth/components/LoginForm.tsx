@@ -67,7 +67,7 @@ function LoginForm() {
     }));
   };
 
-  function validateForm(form: typeof initialForm) {
+  function validateForm(form: { email: string; password: string }) {
     return {
       email: validateField('email', form.email),
       password: validateField('password', form.password),
