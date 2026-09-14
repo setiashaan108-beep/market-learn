@@ -4,6 +4,9 @@ import LearnerLayout from '../../layouts/LearnerLayout';
 import AdminLayout from '../../layouts/AdminLayout';
 import InstructorLayout from '../../layouts/InstructorLayout';
 import PublicLayout from '../../layouts/PublicLayout';
+import ProtectedRoute from '../router/ProtectedRoute';
+import UnauthorizedPage from '../../pages/UnauthorizedPage';
+import CoursePage from '../../pages/CoursePage';
 
 export const routes = [
   {
@@ -15,7 +18,7 @@ export const routes = [
       },
       {
         path: '/courses',
-        element: <h1>Courses Page</h1>,
+        element: <CoursePage />,
       },
       {
         path: '/courses/:courseId',
@@ -41,32 +44,58 @@ export const routes = [
         path: '/forgot-password',
         element: <h1>Forgot Password Page</h1>,
       },
+      {
+        path: '/unauthorized',
+        element: <UnauthorizedPage />,
+      },
     ],
   },
   {
-    element: <LearnerLayout />,
+    element: <ProtectedRoute allowedRoles={['learner']} />, // This will protect the routes below
     children: [
       {
         path: '/app',
-        element: <p>Learner Dashboard</p>,
+        element: <LearnerLayout />,
+        children: [
+          {
+            index: true,
+            element: <p>Learner Dashboard</p>,
+          },
+          {
+            path: 'profile',
+            element: <p>Learner Profile Page</p>,
+          },
+        ],
       },
     ],
   },
   {
-    element: <AdminLayout />,
+    element: <ProtectedRoute allowedRoles={['admin']} />, // This will protect the routes below
     children: [
       {
         path: '/admin',
-        element: <p>Admin Dashboard</p>,
+        element: <AdminLayout />,
+        children: [
+          {
+            index: true,
+            element: <p>Admin Dashboard</p>,
+          },
+        ],
       },
     ],
   },
   {
-    element: <InstructorLayout />,
+    element: <ProtectedRoute allowedRoles={['instructor']} />, // This will protect the routes below
     children: [
       {
         path: '/instructor',
-        element: <p>Instructor Dashboard</p>,
+        element: <InstructorLayout />,
+        children: [
+          {
+            index: true,
+            element: <p>Instructor Dashboard</p>,
+          },
+        ],
       },
     ],
   },

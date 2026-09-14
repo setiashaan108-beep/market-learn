@@ -1,7 +1,8 @@
 import { http, HttpResponse } from 'msw';
+const BACKEND_URL = 'http://localhost:3000';
 
 export const handlers = [
-  http.post('/auth/login', async ({ request }) => {
+  http.post(`${BACKEND_URL}/auth/login`, async ({ request }) => {
     const body = await request.json();
 
     const { email, password } = body as {
