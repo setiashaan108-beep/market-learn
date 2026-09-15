@@ -115,7 +115,7 @@ describe('ProtectedRoute', () => {
               name: 'Test Learner',
               role: 'instructor',
             },
-            isAuthenticated: true,
+            ...authContextAttribute
           }}
         >
           <Routes>
