@@ -96,7 +96,7 @@ function LoginForm() {
       return;
     }
 
-    login?.(form);
+    login(form);
   };
 
   return (
