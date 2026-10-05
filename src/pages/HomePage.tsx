@@ -1,5 +1,12 @@
+import Home from '../features/home/components/Index';
+import '../features/home/components/Home.css';
+
 function HomePage() {
-  return <h1>MarketLearn</h1>;
+  return (
+    <>
+      <Home />
+    </>
+  );
 }
 
 export default HomePage;

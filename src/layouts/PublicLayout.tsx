@@ -15,7 +15,7 @@ function PublicLayout() {
           <Outlet />
         </main>
 
-        <footer>
+        <footer className="public-footer">
           <PublicFooter />
         </footer>
       </div>
