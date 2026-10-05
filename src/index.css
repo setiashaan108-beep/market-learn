@@ -1,7 +1,14 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --text: #212529;
   --text-h: #0076ff;
   --primary-color: #007bff;
+  --primary-hover: #0056b3;
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
@@ -66,22 +73,46 @@ h2 {
   color: var(--text-h);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
 .btn {
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  gap: 0.5rem;
 
-  padding: 0.5rem 1rem;
-  border-radius: 16px;
+  padding: 0.5rem 0.5rem;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
 
   text-decoration: none;
-  font-size: 1.25rem;
+  font-size: 0.875rem;
   font-weight: 500;
   background-color: transparent;
+
+  cursor: pointer;
 
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
+}
+
+.btn svg {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .btn:focus-visible {
@@ -95,10 +126,32 @@ h2 {
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-hover);
+}
+
+@media (min-width: 768px) {
+  .btn {
+    padding: 0.5rem 1rem;
+  }
 }
 
 .error {
   color: red;
   font-size: 0.875rem;
+}
+
+.action-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
 }
