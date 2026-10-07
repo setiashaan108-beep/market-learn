@@ -34,8 +34,8 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_ENABLE_MSW: "true"
-          VITE_API_BASE_URL: "https://marketlearn.scalethread.com"
+          VITE_ENABLE_MSW: 'true'
+          VITE_API_BASE_URL: 'https://marketlearn.scalethread.com'
 
       - name: Deploy to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
