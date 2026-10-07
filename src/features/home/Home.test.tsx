@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { screen, render, waitFor, within } from '@testing-library/react';
+import { screen, render, within } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-import HomePage from '../../pages/HomePage';
+import Home from './Home';
 import { AppProvider } from '../../app/providers/AppProvider';
 import { AuthProvider } from '../../app/providers/AuthProvider';
 
@@ -11,31 +11,25 @@ function LocationDisplay() {
   return <div data-testid="location-display">{location.pathname}</div>;
 }
 
-describe('HomePage', () => {
+describe('Home', () => {
   it('should render the Home component', async () => {
     // Render the HomePage component
     render(
       <MemoryRouter>
         <AppProvider>
           <AuthProvider>
-            <HomePage />
+            <Home />
           </AuthProvider>
         </AppProvider>
       </MemoryRouter>,
     );
-    await waitFor(
-      () => {
-        expect(screen.getByText(/Build your future with/i)).toBeInTheDocument();
-        expect(screen.getByText(/Featured Courses/i)).toBeInTheDocument();
-        expect(screen.getByText(/Why MarketLearn?/i)).toBeInTheDocument();
-        expect(screen.getByText(/Featured Instructors/i)).toBeInTheDocument();
-        expect(screen.getByText(/Ready to Start Learning?/i)).toBeInTheDocument();
-      },
-      {
-        timeout: 3000, // Wait up to 3 seconds instead of 1 (3000ms)
-        interval: 100,
-      },
-    );
+    expect(await screen.findByText(/Build your future with/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Featured Courses/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Why MarketLearn?/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Featured Instructors/i, undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
+    expect(await screen.findByText(/Ready to Start Learning?/i)).toBeInTheDocument();
   });
 
   it('should check browse courses link', async () => {
@@ -45,15 +39,14 @@ describe('HomePage', () => {
       <MemoryRouter>
         <AppProvider>
           <AuthProvider>
-            <HomePage />
+            <Home />
             <LocationDisplay />
           </AuthProvider>
         </AppProvider>
       </MemoryRouter>,
     );
 
-    const heroContainer = document.querySelector<HTMLElement>('.hero');
-    if (!heroContainer) throw new Error('Hero container not found');
+    const heroContainer = screen.getByRole('region', { name: /Hero section/i });
 
     const browseCoursesLink = within(heroContainer).getByRole('link', { name: /Browse Courses/i });
     await user.click(browseCoursesLink);
@@ -68,33 +61,21 @@ describe('HomePage', () => {
       <MemoryRouter>
         <AppProvider>
           <AuthProvider>
-            <HomePage />
+            <Home />
             <LocationDisplay />
           </AuthProvider>
         </AppProvider>
       </MemoryRouter>,
     );
 
-    await waitFor(
-      async () => {
-        const section = await screen.findByRole('region', { name: /Featured Instructors/i });
-        const instructorCards = within(section).findAllByRole('article');
-        const firstInstructorCard = await instructorCards.then((cards) =>
-          cards[0].querySelector('a')!,
-        );
+    const section = await screen.findByRole('region', { name: /Featured Instructors/i });
+    const instructorCards = within(section).findAllByRole('article');
+    const firstInstructorCard = await instructorCards.then((cards) => cards[0].querySelector('a')!);
 
-        await user.click(firstInstructorCard);
+    await user.click(firstInstructorCard);
 
-        const locationDisplay = screen.getByTestId('location-display');
-        const expectedPath = firstInstructorCard.getAttribute('href');
-        if (!expectedPath) throw new Error('Instructor link has no href');
+    const locationDisplay = screen.getByTestId('location-display');
 
-        expect(locationDisplay).toHaveTextContent(expectedPath);
-      },
-      {
-        timeout: 3000, // Wait up to 3 seconds instead of 1 (3000ms)
-        interval: 100,
-      },
-    );
+    expect(locationDisplay).toHaveTextContent('/instructors/1');
   });
 });

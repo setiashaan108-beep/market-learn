@@ -17,18 +17,16 @@ describe('FeaturedInstructors Component', () => {
       </MemoryRouter>,
     );
 
-    await waitFor(
-      () => {
-        expect(screen.getByText('Featured Instructors')).toBeInTheDocument();
-        expect(screen.getByText('John Smith')).toBeInTheDocument();
-        expect(screen.getByText('Sarah Johnson')).toBeInTheDocument();
-        expect(screen.getByText('Mike Chen')).toBeInTheDocument();
-        expect(screen.getByText('Emily Davis')).toBeInTheDocument();
-      },
-      {
-        timeout: 3000,
-        interval: 100,
-      },
-    );
+    expect(
+      await screen.findByText('Featured Instructors', undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
+    expect(await screen.findByText('John Smith', undefined, { timeout: 3000 })).toBeInTheDocument();
+    expect(
+      await screen.findByText('Sarah Johnson', undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
+    expect(await screen.findByText('Mike Chen', undefined, { timeout: 3000 })).toBeInTheDocument();
+    expect(
+      await screen.findByText('Emily Davis', undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
   });
 });

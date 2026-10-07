@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { AuthProvider } from '../../../app/providers/AuthProvider';
 import { AppProvider } from '../../../app/providers/AppProvider';
 import FeaturedCourses from './FeaturedCourses';
@@ -16,17 +16,20 @@ describe('FeaturedCourses Component', () => {
         </AppProvider>
       </MemoryRouter>,
     );
-    await waitFor(
-      () => {
-        expect(screen.getByText('The Complete Web Development Bootcamp')).toBeInTheDocument();
-        expect(screen.getByText('Data Science for Beginners')).toBeInTheDocument();
-        expect(screen.getByText('UI/UX Design Fundamentals')).toBeInTheDocument();
-        expect(screen.getByText('Python Programming Masterclass')).toBeInTheDocument();
-      },
-      {
+
+    expect(
+      await screen.findByText('The Complete Web Development Bootcamp', undefined, {
         timeout: 3000,
-        interval: 100,
-      },
-    );
+      }),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText('Data Science for Beginners', undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText('UI/UX Design Fundamentals', undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByText('Python Programming Masterclass', undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
   });
 });
