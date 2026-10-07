@@ -5,7 +5,7 @@ import { FaArrowRight, RiInfinityLine, FiBookOpen, CiUser } from '../../../compo
 
 function Hero() {
   return (
-    <section className="hero">
+    <section className="hero" aria-label="Hero section">
       <div className="container hero-container">
         {/* Left Content Area */}
         <div className="hero-info">

@@ -1,4 +1,4 @@
-import Home from '../features/home/components/Index';
+import Home from '../features/home/Home';
 import '../features/home/components/Home.css';
 
 function HomePage() {

@@ -6,31 +6,27 @@ import InstructorCard from './InstructorCard';
 function FeaturedInstructors() {
   const { data: instructors, isLoading, error, isError } = useGetFeaturedInstructorsQuery();
 
-  if (isLoading) {
-    return (
-      <div className="status-container" aria-live="polite">
-        <p>Loading featured instructors...</p>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="status-container error" aria-live="assertive">
-        <p>Failed to load instructors. Please try again later.</p>
-        <small>
-          {' '}
-          {error && typeof error === 'object' && 'message' in error
-            ? String((error as Record<string, unknown>).message)
-            : JSON.stringify(error)}
-        </small>
-      </div>
-    );
-  }
-
   return (
-    <section className="featured-instructors">
+    <section className="featured-instructors" aria-label="Featured Instructors">
       <div className="container">
+        {isLoading && (
+          <div className="status-container" aria-live="polite">
+            <p>Loading featured instructors...</p>
+          </div>
+        )}
+
+        {isError && (
+          <div className="status-container error" aria-live="assertive">
+            <p>Failed to load instructors. Please try again later.</p>
+            <small>
+              {' '}
+              {error && typeof error === 'object' && 'message' in error
+                ? String((error as Record<string, unknown>).message)
+                : JSON.stringify(error)}
+            </small>
+          </div>
+        )}
+
         <div className="section-info-with-action">
           <header className="section-info">
             <h2 className="section-title">Featured Instructors</h2>
